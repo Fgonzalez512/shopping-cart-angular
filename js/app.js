@@ -7,5 +7,8 @@ app.config(function($routeProvider, $locationProvider) {
             controller: 'myController'
         })
 
-
+    .when('/cart', {
+        templateUrl: 'partials/cart.html',
+        controller: 'myController2'
+    })
 });

@@ -19,15 +19,14 @@
     <!-- SearchBar and Dropdown and Checkout Button-->
     <div class="ui fluid category search">
         <div class="ui icon input">
-            <input class="prompt" type="text" placeholder="Search by name...">
+            <input class="prompt" type="text" placeholder="Search by name..." ng-model="searchFilter">
             <i class="search icon"></i>
         </div>
         <div class="results"></div>
 
-        <select class="ui dropdown">
+        <select class="ui dropdown" ng-model="categorySearch">
           <option value="">Search by Category</option>
-          <option value="1">------</option>
-          <option value="0">=====</option>
+          <option ng-repeat="category in view.categories">{{category}}</option>
         </select>
 
         <button class="right attached ui button" id="checkout">Checkout | Bag:</button>
@@ -44,7 +43,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="tea in view.products">
+            <tr ng-repeat="tea in view.products | filter : searchFilter | filter : categorySearch">
                 <td>
                     <img ng-src="{{tea.imageUrl}}" alt="tea picture" />
                 </td>
@@ -53,12 +52,9 @@
 
                     <div id="quantity">
                         <h2>Quantity:</h2>
-                        <select class="ui dropdown">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                      </select>
+                        <select class="ui dropdown" ng-model="quantity">
+                        <option  ng-repeat="qty in [2,3,4,5,6,7,8,9,10]">{{qty}}</option>
+                        </select>
                         <button class="ui yellow button">Add to Cart</button>
                     </div>
 

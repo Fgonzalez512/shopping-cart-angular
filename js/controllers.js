@@ -3,6 +3,8 @@ app.controller('myController', ['$scope', '$http', function($scope, $http) {
     $scope.view = {};
     $scope.view.booyah = 'booyah';
 
+    $scope.view.categories = ["dark", "cold", "awesome", "dry", "hot", "summer", "lucid", "warm", "winter", "spring"];
+
     $scope.view.products = [{
             "_id": "55c8ee82152165d244b98300",
             "name": "Bayard stew",
@@ -117,6 +119,14 @@ app.controller('myController', ['$scope', '$http', function($scope, $http) {
             "categories": ["spring", "warm", "winter"]
         }
     ];
+
+
+}]);
+
+app.controller('myController2', ['$scope', '$http', function($scope, $http) {
+
+    $scope.view = {};
+
 
 
 }]);
