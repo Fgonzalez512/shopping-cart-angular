@@ -1,11 +1,7 @@
-app.controller('myController', ['$scope', '$http', function($scope, $http) {
-
+app.controller('shoppingList', ['$scope', '$http', 'Bag', function($scope, $http, Bag) {
     $scope.view = {};
-    $scope.view.booyah = 'booyah';
-
-    $scope.view.categories = ["dark", "cold", "awesome", "dry", "hot", "summer", "lucid", "warm", "winter", "spring"];
-
-    $scope.view.products = [{
+    $scope.view.categories = ['dark', 'cold', 'awesome', 'dry', 'hot', 'summer', 'lucid', 'winter', 'spring', 'warm'];
+    $scope.view.items = [{
             "_id": "55c8ee82152165d244b98300",
             "name": "Bayard stew",
             "ingredients": "concentrated gluten, jewelry, dill, beetle nut, toast",
@@ -118,15 +114,68 @@ app.controller('myController', ['$scope', '$http', function($scope, $http) {
             "__v": 0,
             "categories": ["spring", "warm", "winter"]
         }
-    ];
+    ]
+
+    $scope.view.userbag = [];
+
+    $scope.view.addToBag = function(tea, num) {
+
+        var dupes = 0;
+
+        if (!num) {
+            num = 1;
+        }
+
+        $scope.view.userbag.forEach(function(eachTea) {
+            if (eachTea._id === tea._id) {
+                dupes += 1
+            }
+        })
+
+        tea.quantity = num;
 
 
-}]);
-
-app.controller('myController2', ['$scope', '$http', function($scope, $http) {
-
-    $scope.view = {};
+        if (dupes === 0) {
+            $scope.view.userbag.push(tea)
+        }
 
 
+        console.log(tea);
+        console.log($scope.view.userbag);
 
-}]);
+        Bag.addToCart($scope.view.userbag)
+
+    }
+}])
+
+
+app.controller('cart', ['$scope', '$http', 'Bag', function($scope, $http, Bag) {
+
+    $scope.cart = {};
+
+    $scope.cart.bag = Bag.getCart();
+
+    Bag.getTotal($scope.cart.bag)
+    $scope.cart.grandTotal = Bag.showTotal();
+
+    $scope.cart.editing = false;
+
+    $scope.cart.editQuantity = function() {
+        $scope.cart.editing = !$scope.cart.editing;
+    }
+
+    $scope.cart.submitQuantity = function(num, index) {
+        $scope.cart.bag[index].quantity = num;
+        $scope.cart.editing = false;
+        Bag.getTotal($scope.cart.bag)
+        $scope.cart.grandTotal = Bag.showTotal();
+    }
+
+
+    $scope.cart.delete = function(index) {
+        $scope.cart.bag.splice(index, 1)
+        Bag.getTotal($scope.cart.bag)
+        $scope.cart.grandTotal = Bag.showTotal();
+    }
+
+}])
