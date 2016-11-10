@@ -1,0 +1,61 @@
+<div class="container" ng-controller="shoppingList">
+    <label for="categoryFilter">Sort By Category: </label>
+    <select class="options" id="categoryFilter" ng-model='byCategory'>
+    <option value="{{category}}" ng-repeat='category in view.categories'>{{category}}</option>
+  </select>
+    <label for="search-by-text">Search By Name: </label>
+    <input type="text" name="name" id="search-by-text" ng-model="byText">
+    <div class="checkout">
+        <a href="#/checkout">
+            <button type="button" name="button" class="btn btn-success">Checkout | Bag:
+      <span ng-if="!view.userbag.length">Empty!</span>
+      <span ng-if="view.userbag.length">{{view.userbag.length}}</span>
+    </button>
+        </a>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Tea</th>
+                <th>Information
+                    <span class='sort'>Sort By Price:
+          <select class="options" name="" ng-model="priceSort">
+            <option value="-price">High</option>
+            <option value="price">Low</option>
+          </select>
+          </span>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat='item in view.items | filter:byCategory| filter:byText | orderBy:priceSort'>
+                <td>
+                    <img ng-src="{{item.imageUrl}}" class="img-responsive center-block" alt="" />
+                </td>
+                <td>
+                    <h2>{{item.name}}</h2>
+                    <span class="quantities">Quantity:
+             <select name="options" ng-model='quantity'>
+               <option ng-repeat='number in [1,2,3,4,5,6,7,8,9]'>{{number}}</option>
+             </select>
+             <button type="button" name="button" class="btn btn-primary" ng-click="view.addToBag(item, quantity)">Add To Bag</button>
+           </span>
+                    <p>Price: {{item.price/100 | currency}}</p>
+                    <div class="caffeine-section pull-right">
+                        <p>
+                            Caffeine: mg/serving {{item.caffeineScale}}
+                        </p>
+                        <caffeine-scale caffeinemg="item.caffeineScale" id="item._id"></caffeine-scale>
+                    </div>
+                    <p>Ingredients: {{item.ingredients}}</p>
+                    <p>Rating: {{item.rating}}</p>
+                    <p>In Stock? {{item.inStock | inStock}}</p>
+                    <p>Categories</p>
+                    <ul>
+                        <li ng-repeat='category in item.categories'>{{category}}</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

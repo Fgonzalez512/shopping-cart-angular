@@ -1,13 +1,45 @@
-<div class="">
+<div class="container">
+
+    <h2>Grand Total: {{cart.grandTotal/100 | currency}}</h2>
 
 
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Sub-Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat='item in cart.bag'>
+                <td>
+                    <img ng-src="{{item.imageUrl}}" alt="tea image" />
+                    <p>Name: <strong>{{item.name}}</strong></p>
+                    <p>Caffeine Level: {{item.caffeineScale}} mg/serving</p>
+                    <p>Rating: {{item.rating}}</p>
+                </td>
+                <td>
+                    <p>
+                        {{item.quantity}}
+                    </p>
+                </td>
+                <td>
+                    {{item.quantity * (item.price/100) | currency}}
+                </td>
+                <td>
+                    <div class="pull-right">
+                        <div ng-show="cart.editing" class="pull-left">
+                            <input type="text" ng-model="newQuantity">
+                            <button type="button" name="button" class="btn btn-warning" ng-click="cart.submitQuantity(newQuantity, $index)">Submit</button>
+                        </div>
+                        <button type="button" name="button" class="btn btn-info" ng-click="cart.editQuantity()" ng-hide="cart.editing">Edit</button>
+                        <button type="button" name="button" class="btn btn-danger" ng-click="cart.delete($index)">Delete</button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
 
-
-
-
-
-
-
-    <!-- Ending Div tag -->
 </div>

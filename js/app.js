@@ -1,14 +1,14 @@
-var app = angular.module('app', ['ngRoute']);
+var app = angular.module('shoppingCart', ['ngRoute']);
 
 app.config(function($routeProvider, $locationProvider) {
     $routeProvider
         .when('/', {
-            templateUrl: 'partials/home.html',
-            controller: 'myController'
+            templateUrl: 'partials/main.html',
+            controller: 'shoppingList',
+            controllerAs: 'teas'
         })
-
-    .when('/cart', {
-        templateUrl: 'partials/cart.html',
-        controller: 'myController2'
-    })
-});
+        .when('/checkout', {
+            templateUrl: 'partials/cart.html',
+            controller: 'cart'
+        })
+})
